@@ -46,7 +46,7 @@ public class Connection {
         final MqttConnectOptions mqttConnectOptions= new MqttConnectOptions();
         mqttConnectOptions.setCleanSession(false);
         mqttConnectOptions.setKeepAliveInterval(0);
-        mqttConnectOptions.setMqttVersion(MqttConnectOptions.MQTT_VERSION_3_1_1);
+        
         try {
             androidClient.connect(mqttConnectOptions, null, new IMqttActionListener() {
                 @Override
