@@ -21,7 +21,8 @@
         android:ems="10"
         android:hint="inserire nel formato hh:mm"
         android:inputType="time"
-        android:text="21:50"/>
+        android:text="21:50"
+        android:maxLength="5"/>
 
     <EditText
         android:id="@+id/date_from"
@@ -30,7 +31,8 @@
         android:ems="10"
         android:hint="inserire nel formato yyyy-mm-dd"
         android:inputType="date"
-        android:text="2017-10-23"/>
+        android:text="2017-10-23"
+        android:maxLength="10"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -43,6 +45,7 @@
         android:ems="10"
         android:hint="inserire nel formato hh:mm"
         android:text="22:50"
+        android:maxLength="5"
         android:inputType="time" />
 
     <EditText
@@ -52,6 +55,7 @@
         android:ems="10"
         android:hint="inserire nel formato yyyy-mm-dd"
         android:text="2017-12-23"
+        android:maxLength="10"
         android:inputType="date" />
 
     <Button
