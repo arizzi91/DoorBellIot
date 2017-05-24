@@ -47,7 +47,7 @@ public class PublishFragment extends android.support.v4.app.Fragment {
 
                 Connection connection= new Connection(getContext(), SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF),
                         SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF),
-                        "query");
+                        TOPIC_CONNECT);
                 connection.publish(query,TOPIC_CONNECT);
 
 
