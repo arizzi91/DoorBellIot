@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GUARDA CHI HA SUONATO"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DA:"/>
+    <EditText
+        android:id="@+id/time_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="inserire nel formato hh:mm"
+        android:inputType="time"
+        android:text="21:50"/>
+
+    <EditText
+        android:id="@+id/date_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="inserire nel formato yyyy-mm-dd"
+        android:inputType="date"
+        android:text="2017-10-23"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="A:"/>
+    <EditText
+        android:id="@+id/time_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="inserire nel formato hh:mm"
+        android:text="22:50"
+        android:inputType="time" />
+
+    <EditText
+        android:id="@+id/date_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="inserire nel formato yyyy-mm-dd"
+        android:text="2017-12-23"
+        android:inputType="date" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="invia query"
+        android:id="@+id/btn_query"/>
+
+</LinearLayout>

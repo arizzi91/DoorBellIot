@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">IoTProject</string>
+    <string name="server">Server</string>
+    <string name="port">Port</string>
+    <string name="clientID">Client ID</string>
+    <string name="serverURIHint">example.example.com</string>
+    <string name="portHint">1883</string>
+    <string name="sub">Topic</string>
+    <string name="button_connection">CONNETTI E SOTTOSCRIVI TOPIC</string>
+    <string name="button_disconnect">DISCONNETTI</string>
+
+</resources>
