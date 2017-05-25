@@ -2,9 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,55 +10,45 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="DA:"/>
-    <EditText
-        android:id="@+id/time_from"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvTimeFrom"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="inserire nel formato hh:mm"
-        android:inputType="time"
-        android:text="21:50"
-        android:maxLength="5"/>
-
-    <EditText
-        android:id="@+id/date_from"
-        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:hint="Inserisci ora"
+        android:textSize="30sp" />
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="inserire nel formato yyyy-mm-dd"
-        android:inputType="date"
-        android:text="2017-10-23"
-        android:maxLength="10"/>
-
+        android:hint="Inserisci data"
+        android:id="@+id/tvDateFrom"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="A:"/>
-    <EditText
-        android:id="@+id/time_to"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="inserire nel formato hh:mm"
-        android:text="22:50"
-        android:maxLength="5"
-        android:inputType="time" />
-
-    <EditText
-        android:id="@+id/date_to"
-        android:layout_width="match_parent"
+        android:hint="Inserisci ora"
+        android:id="@+id/tvTimeTo"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp"/>
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="inserire nel formato yyyy-mm-dd"
-        android:text="2017-12-23"
-        android:maxLength="10"
-        android:inputType="date" />
-
+        android:hint="Inserisci data"
+        android:id="@+id/tvDateTo"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp" />
     <Button
+        android:id="@+id/btn_query"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="invia query"
-        android:id="@+id/btn_query"/>
-
+        android:layout_marginTop="30dp"
+        android:text="invia query" />
 </LinearLayout>

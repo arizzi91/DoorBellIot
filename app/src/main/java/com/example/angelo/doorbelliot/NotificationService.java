@@ -48,7 +48,7 @@ public class NotificationService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        try{
+        if(intent != null && intent.hasExtra("CLIENT") && intent.hasExtra("SERVER") && intent.hasExtra("TOPIC")){
             Connection connection= new Connection(getApplicationContext(),
                     intent.getStringExtra("CLIENT"),
                     intent.getStringExtra("SERVER"),
@@ -57,7 +57,7 @@ public class NotificationService extends Service{
             androidClient=connection.createClient();
             connection.connect(androidClient);
             this.messageArrived(androidClient);
-        }catch (NullPointerException e){
+        }else{
             SharedPreferencesSingleton.init(getBaseContext());
             Connection connection=new Connection(getApplicationContext(),
                     SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF),
@@ -69,7 +69,7 @@ public class NotificationService extends Service{
         }
 
 
-        return START_STICKY;
+        return START_STICKY_COMPATIBILITY;
     }
 
     private void messageArrived(MqttAndroidClient androidClient) {
@@ -98,10 +98,6 @@ public class NotificationService extends Service{
 
                 CronologiaFragment.addMessage(new String(message.getPayload()));
                 Toast.makeText(getApplicationContext(),"messaggio arrivato"+new String(message.getPayload()),Toast.LENGTH_SHORT).show();
-
-                //Message message1= new Message(message);
-
-
 
             }
 

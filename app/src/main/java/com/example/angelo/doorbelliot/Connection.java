@@ -140,6 +140,7 @@ public class Connection {
         mqttMessage.setPayload(publishMessage.getBytes());
         try {
             androidClient.publish(topic, mqttMessage);
+            Log.d(TAG,"Messaggio pubblicato: "+publishMessage);
         } catch (MqttException e) {
             e.printStackTrace();
             Log.d(TAG,"Messaggio non pubblicato "+e.getMessage());
