@@ -39,7 +39,7 @@ public class CronologiaFragment extends android.support.v4.app.Fragment  {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter= new MyAdapter(new ArrayList<String>());
         mRecyclerView.setAdapter(mAdapter);
-        //Message.showSize();
+
     }
 
 
@@ -47,7 +47,8 @@ public class CronologiaFragment extends android.support.v4.app.Fragment  {
     public static void addMessage(String payload) {
         Log.d(TAG,"messaggio: " + payload);
         ((MyAdapter)mAdapter).add(payload);
-        //Message.showSize();
+
+        
     }
 
 }

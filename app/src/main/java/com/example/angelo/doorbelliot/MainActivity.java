@@ -8,7 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
+import android.util.Log;
 
 
 public class MainActivity extends AppCompatActivity implements NewConnectionFragment.PassValues {
@@ -34,11 +34,14 @@ public class MainActivity extends AppCompatActivity implements NewConnectionFrag
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         tabLayout.setupWithViewPager(mViewPager);
         SharedPreferencesSingleton.init(getApplicationContext());
 
+
+        //onNewIntent(getIntent());
 
     }
 
@@ -57,6 +60,20 @@ public class MainActivity extends AppCompatActivity implements NewConnectionFrag
 
 
     }
+
+    /*public void onNewIntent(Intent intent){
+        Bundle extras = intent.getExtras();
+        if(extras != null){
+
+            mViewPager.setCurrentItem(1);
+
+            CronologiaFragment cronologia = (CronologiaFragment)mSectionsPagerAdapter.getItem(1);
+            cronologia.addMessage(extras.getString("messaggio"));
+            mSectionsPagerAdapter.notifyDataSetChanged();
+
+        }
+    }*/
+
 
 
 

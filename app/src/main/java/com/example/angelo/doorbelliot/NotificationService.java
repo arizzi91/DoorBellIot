@@ -1,9 +1,14 @@
 package com.example.angelo.doorbelliot;
 
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -23,6 +28,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class NotificationService extends Service{
     private static final String TAG="Service";
     private MqttAndroidClient androidClient;
+    private Uri sound = RingtoneManager.getDefaultUri((RingtoneManager.TYPE_NOTIFICATION));
 
 
 
@@ -92,8 +98,29 @@ public class NotificationService extends Service{
                 builder.setSmallIcon(R.mipmap.ic_launcher);
                 builder.setContentTitle("Notifica IotApp");
                 builder.setContentText("Immagine arrivata");
+                builder.setSound(sound);
+                builder.setAutoCancel(true);
+                builder.setDefaults(Notification.DEFAULT_VIBRATE);
+
+                /*Intent resultIntent = new Intent(getBaseContext(), MainActivity.class);
+                resultIntent.putExtra("messaggio",new String(message.getPayload()));
+                Log.d(TAG,resultIntent.getStringExtra("messaggio"));
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(getBaseContext());
+// Adds the back stack
+                stackBuilder.addParentStack(MainActivity.class);
+// Adds the Intent to the top of the stack
+                stackBuilder.addNextIntent(resultIntent);
+
+// Gets a PendingIntent containing the entire back stack
+                PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
+
+
+                builder.setContentIntent(resultPendingIntent);*/
+
                 NotificationManager NM= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 NM.notify(0,builder.build());
+
 
 
                 CronologiaFragment.addMessage(new String(message.getPayload()));

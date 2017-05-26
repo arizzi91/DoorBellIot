@@ -48,6 +48,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
         conn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, ""+SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,SharedPreferencesSingleton.STATUS_DEF));
                 if(parseValori(client.getText().toString(),server.getText().toString(),port.getText().toString(),topic.getText().toString())){
                     clientName=client.getText().toString();
                     serverName=server.getText().toString();
@@ -76,6 +77,8 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
         disc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, ""+SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,SharedPreferencesSingleton.STATUS_DEF));
+
                 if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,true)){
                     Connection connection=new Connection(getContext(),SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,"client"),
                             SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,"server"),

@@ -1,11 +1,14 @@
 package com.example.angelo.doorbelliot;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,10 +60,33 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Context context= holder.mImageView.getContext();
+        final Context context= holder.mImageView.getContext();
         holder.mTextView.setText(getTitle(myCrono.get(position)));
         Picasso.with(context).load(Uri.parse(myCrono.get(position))).into(holder.mImageView);
+        final int pos=position;
 
+        holder.mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View view) {
+
+
+                final Dialog dialog = new Dialog(context, R.style.FullScreenDialogTheme);
+                dialog.setContentView(R.layout.dialog);
+                ImageView im = (ImageView) dialog.findViewById(R.id.imageView);
+                Picasso.with(context).load(Uri.parse(myCrono.get(pos))).into(im);
+
+                im.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                Window window = dialog.getWindow();
+                window.setLayout(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
+            }
+        });
 
     }
 

@@ -3,6 +3,7 @@ package com.example.angelo.doorbelliot;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 /**
  * Created by angelo on 08/05/17.
@@ -56,4 +57,8 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 
 
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 }
