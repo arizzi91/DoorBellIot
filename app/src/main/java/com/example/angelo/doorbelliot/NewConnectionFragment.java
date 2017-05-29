@@ -3,7 +3,6 @@ package com.example.angelo.doorbelliot;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedOutputStream;
+import com.example.angelo.doorbelliot.Connection;
+import com.example.angelo.doorbelliot.R;
+import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
+
 
 /**
  * Created by angelo on 08/05/17.
@@ -48,7 +50,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
         conn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, ""+SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,SharedPreferencesSingleton.STATUS_DEF));
+                Log.d(TAG, ""+ SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,SharedPreferencesSingleton.STATUS_DEF));
                 if(parseValori(client.getText().toString(),server.getText().toString(),port.getText().toString(),topic.getText().toString())){
                     clientName=client.getText().toString();
                     serverName=server.getText().toString();
@@ -65,11 +67,6 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
                         pass.passage(clientName,serverName,topicName);
                     }
                 }else Toast.makeText(getContext(),"inserire campi mancanti",Toast.LENGTH_LONG).show();
-
-
-
-
-
 
             }
         });
@@ -112,6 +109,6 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
     }
 
     public interface PassValues{
-        public void passage (String client, String server,String topic);
+        void passage (String client, String server,String topic);
     }
 }

@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 
 public class MainActivity extends AppCompatActivity implements NewConnectionFragment.PassValues {
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NewConnectionFrag
         SharedPreferencesSingleton.init(getApplicationContext());
 
 
-        //onNewIntent(getIntent());
+        onNewIntent(getIntent());
 
     }
 
@@ -50,29 +49,28 @@ public class MainActivity extends AppCompatActivity implements NewConnectionFrag
     @Override
     public void passage(final String client, final String server, final String topic) {
 
-        Intent mIntent= new Intent(getApplicationContext(), NotificationService.class);
-        mIntent.putExtra("SERVER",server);
-        mIntent.putExtra("CLIENT",client);
-        mIntent.putExtra("TOPIC",topic);
+        Intent mIntent= new Intent(getApplicationContext(), MyMqttService.class);
+        mIntent.putExtra(SharedPreferencesSingleton.SERVER,server);
+        mIntent.putExtra(SharedPreferencesSingleton.CLIENT,client);
+        mIntent.putExtra(SharedPreferencesSingleton.TOPIC,topic);
         getApplicationContext().startService(mIntent);
-
-
-
 
     }
 
-    /*public void onNewIntent(Intent intent){
+    public void onNewIntent(Intent intent){
         Bundle extras = intent.getExtras();
-        if(extras != null){
+        try{
+            if(extras != null && !extras.getString(SharedPreferencesSingleton.MESSAGGIO).equals(null)){
 
-            mViewPager.setCurrentItem(1);
+                mViewPager.setCurrentItem(1);
+                CronologiaFragment.addMessageStatic(extras.getString(SharedPreferencesSingleton.MESSAGGIO));
 
-            CronologiaFragment cronologia = (CronologiaFragment)mSectionsPagerAdapter.getItem(1);
-            cronologia.addMessage(extras.getString("messaggio"));
-            mSectionsPagerAdapter.notifyDataSetChanged();
-
+            }
+        }catch (NullPointerException e){
+            e.getMessage();
         }
-    }*/
+
+    }
 
 
 

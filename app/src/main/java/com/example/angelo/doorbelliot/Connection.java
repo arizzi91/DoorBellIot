@@ -67,7 +67,7 @@ public class Connection {
                     Log.d(TAG, "la connessione non è riuscita "+exception.getMessage());
                     Toast.makeText(context, "la connessione non è riuscita "+exception.getMessage(),Toast.LENGTH_LONG).show();
                     SharedPreferencesSingleton.setBooleanPreferences(SharedPreferencesSingleton.STATUS,false);
-                    Intent conn_intent= new Intent(context,NotificationService.class);
+                    Intent conn_intent= new Intent(context,MyMqttService.class);
                     context.stopService(conn_intent);
                 }
             });
@@ -87,8 +87,11 @@ public class Connection {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.d(TAG,"ok sottoscritto");
-                    SharedPreferencesSingleton.setBooleanPreferences(SharedPreferencesSingleton.STATUS,true).
-                            setBooleanPreferences(SharedPreferencesSingleton.BOOT_SERVICE,true);
+                    Toast.makeText(context,"Sei connesso al broker: "+androidClient.getServerURI()+
+                                    ".\nCon clientID: "+androidClient.getClientId()+
+                                    ".\nSottoscritto al topic: "+topicName,
+                            Toast.LENGTH_LONG).show();
+                    SharedPreferencesSingleton.setBooleanPreferences(SharedPreferencesSingleton.STATUS,true);
 
                 }
 
@@ -111,9 +114,8 @@ public class Connection {
             androidClient.disconnect(null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    SharedPreferencesSingleton.setBooleanPreferences(SharedPreferencesSingleton.STATUS,false).
-                            setBooleanPreferences(SharedPreferencesSingleton.BOOT_SERVICE,false);
-                    Intent disc_intent= new Intent(context,NotificationService.class);
+                    SharedPreferencesSingleton.setBooleanPreferences(SharedPreferencesSingleton.STATUS,false);
+                    Intent disc_intent= new Intent(context,MyMqttService.class);
                     context.stopService(disc_intent);
                     Log.d(TAG,"ok disconnesso");
                     Toast.makeText(context,"Sei disconnesso",Toast.LENGTH_LONG).show();

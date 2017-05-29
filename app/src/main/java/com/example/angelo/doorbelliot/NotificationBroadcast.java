@@ -11,11 +11,11 @@ import android.content.Intent;
 public class NotificationBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent myIntent= new Intent(context,NotificationService.class);
+        Intent myIntent= new Intent(context,MyMqttService.class);
         SharedPreferencesSingleton.init(context);
-        myIntent.putExtra("CLIENT",SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF));
-        myIntent.putExtra("SERVER",SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF));
-        myIntent.putExtra("TOPIC",SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,SharedPreferencesSingleton.TOPIC_DEF));
+        myIntent.putExtra(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF));
+        myIntent.putExtra(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF));
+        myIntent.putExtra(SharedPreferencesSingleton.TOPIC,SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,SharedPreferencesSingleton.TOPIC_DEF));
         context.startService(myIntent);
     }
 

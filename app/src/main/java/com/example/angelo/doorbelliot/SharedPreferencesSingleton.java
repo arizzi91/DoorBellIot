@@ -10,15 +10,18 @@ import android.content.SharedPreferences;
 public class SharedPreferencesSingleton {
     private SharedPreferences mySHaredPref;
     private static SharedPreferencesSingleton currentInstance;
+
     public static final String CLIENT="CLIENT";
     public static final String SERVER="SERVER";
     public static final String TOPIC="TOPIC";
     public static final String STATUS="STATUS";
-    public static final String BOOT_SERVICE="BOOT_SERVICE";
+    public static final String MESSAGGIO="messaggio";
+
     public static final String CLIENT_DEF="home";
     public static final String SERVER_DEF="192.168.1.103";
     public static final String TOPIC_DEF="prova";
     public static final boolean STATUS_DEF=false;
+
 
 
 
@@ -35,7 +38,6 @@ public class SharedPreferencesSingleton {
         return currentInstance;
     }
 
-
     public static SharedPreferencesSingleton setStringPreferences(String key, String value){
         SharedPreferences.Editor editor= currentInstance.mySHaredPref.edit();
         editor.putString(key,value);
@@ -49,14 +51,6 @@ public class SharedPreferencesSingleton {
         editor.commit();
         return currentInstance;
     }
-
-    public static SharedPreferencesSingleton setIntPreferences(String key, int value){
-        SharedPreferences.Editor editor= currentInstance.mySHaredPref.edit();
-        editor.putInt(key,value);
-        editor.commit();
-        return currentInstance;
-    }
-
 
     public static String getStringPreferences(String key,String def){
         return currentInstance.mySHaredPref.getString(key,def);

@@ -4,8 +4,10 @@
     <string name="server">Server</string>
     <string name="port">Port</string>
     <string name="clientID">Client ID</string>
-    <string name="serverURIHint">example.example.com</string>
-    <string name="portHint">1883</string>
+    <string name="clientHint">home</string>
+    <string name="serverURIHint">192.168.1.69</string>
+    <string name="portHint">5000</string>
+    <string name="topicHint">ring</string>
     <string name="sub">Topic</string>
     <string name="button_connection">CONNETTI E SOTTOSCRIVI TOPIC</string>
     <string name="button_disconnect">DISCONNETTI</string>

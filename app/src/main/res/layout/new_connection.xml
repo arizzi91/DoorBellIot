@@ -24,7 +24,7 @@
             android:layout_weight="0.22"
             android:ems="10"
             android:inputType="text"
-            android:text="home"
+            android:hint="@string/clientHint"
             />
     </LinearLayout>
 
@@ -51,7 +51,6 @@
             android:ems="10"
             android:hint="@string/serverURIHint"
             android:inputType="text"
-            android:text="10.0.2.2"
             />
     </LinearLayout>
 
@@ -77,7 +76,6 @@
             android:ems="10"
             android:inputType="number"
             android:hint="@string/portHint"
-            android:text="5000"
             />
     </LinearLayout>
     <LinearLayout
@@ -101,7 +99,7 @@
             android:layout_weight="0.22"
             android:ems="10"
             android:inputType="text"
-            android:text="prova"/>
+            android:hint="@string/topicHint"/>
     </LinearLayout>
 
     <Button

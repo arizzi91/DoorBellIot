@@ -19,7 +19,7 @@
 
         <service android:name="org.eclipse.paho.android.service.MqttService" >
         </service>
-        <service android:name=".NotificationService"></service>
+        <service android:name=".MyMqttService"></service>
 
         <receiver android:name=".NotificationBroadcast">
             <intent-filter>

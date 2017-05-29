@@ -17,11 +17,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.eclipse.paho.android.service.MqttAndroidClient;
+import com.example.angelo.doorbelliot.Connection;
+import com.example.angelo.doorbelliot.R;
+import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 
+import org.eclipse.paho.android.service.MqttAndroidClient;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by angelo on 19/05/17.
@@ -180,15 +187,35 @@ public class PublishFragment extends android.support.v4.app.Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                query="SELECT PATH FROM Images WHERE DATA_SCATTO BETWEEN TIMESTAMP('"+datefrom+" "+timefrom+"') AND TIMESTAMP('"+dateto+" "+timeto+"');";
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                try {
+                    Date datef = formatter.parse(datefrom+" "+timefrom);
+                    Date datet = formatter.parse(dateto+" "+timeto);
 
-                Connection connection= new Connection(getContext(), SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF),
-                        SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF),
-                        TOPIC_CONNECT);
-                connection.publish(query,TOPIC_CONNECT);
+                    if(datef.compareTo(datet)<0)
+                    {
+                        query="SELECT PATH FROM Images WHERE DATA_SCATTO BETWEEN TIMESTAMP('"+datefrom+" "+timefrom+"') AND TIMESTAMP('"+dateto+" "+timeto+"');";
+
+                        Connection connection= new Connection(getContext(), SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF),
+                                SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF),
+                                TOPIC_CONNECT);
+                        connection.publish(query,TOPIC_CONNECT);
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(),"Valori non corretti",Toast.LENGTH_SHORT).show();
+
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
 
             }
+
+
         });
+
 
     }
 

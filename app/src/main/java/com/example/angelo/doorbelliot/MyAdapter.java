@@ -1,10 +1,11 @@
 package com.example.angelo.doorbelliot;
 
 import android.app.Dialog;
+import android.app.Notification;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,22 +21,15 @@ import java.util.ArrayList;
  * Created by angelo on 09/05/17.
  */
 
-class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
-
-
-
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
+    private static final String TAG="MyAdapter";
     private ArrayList<String> myCrono;
-
-
-
 
     public MyAdapter(ArrayList<String> images) {
 
         myCrono=images;
 
-
     }
-
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -70,7 +64,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
             public void onClick(View view) {
 
-
                 final Dialog dialog = new Dialog(context, R.style.FullScreenDialogTheme);
                 dialog.setContentView(R.layout.dialog);
                 ImageView im = (ImageView) dialog.findViewById(R.id.imageView);
@@ -90,7 +83,10 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     }
 
+
+
     public void add(String  data){
+
 
         myCrono.add(data);
 

@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.example.angelo.doorbelliot.MyAdapter;
+import com.example.angelo.doorbelliot.R;
+
 import java.util.ArrayList;
 
 
@@ -18,11 +21,16 @@ import java.util.ArrayList;
  */
 
 public class CronologiaFragment extends android.support.v4.app.Fragment  {
-    private RecyclerView mRecyclerView;
+    private static RecyclerView mRecyclerView;
     private static RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static final String TAG = "CronologiaFragment";
 
+
+    public CronologiaFragment () {
+        if ( mAdapter == null )
+            mAdapter= new MyAdapter(new ArrayList<String>());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
@@ -37,18 +45,20 @@ public class CronologiaFragment extends android.support.v4.app.Fragment  {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter= new MyAdapter(new ArrayList<String>());
         mRecyclerView.setAdapter(mAdapter);
 
     }
 
 
 
-    public static void addMessage(String payload) {
+
+    public static void addMessageStatic(String payload) {
         Log.d(TAG,"messaggio: " + payload);
+        if ( mAdapter == null )
+            mAdapter= new MyAdapter(new ArrayList<String>());
         ((MyAdapter)mAdapter).add(payload);
 
-        
+
     }
 
 }
