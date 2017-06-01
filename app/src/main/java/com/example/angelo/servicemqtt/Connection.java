@@ -1,9 +1,11 @@
-package com.example.angelo.doorbelliot;
+package com.example.angelo.servicemqtt;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -12,17 +14,28 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+
 /**
- * Created by angelo on 18/05/17.
+ *Class connection provides all methods to create and manage connection to broker.
  */
 
 public class Connection {
-    private MqttAndroidClient androidClient=null;
+    /**
+     * Debug Tag for use logging debug output to LogCat
+     */
     private static final String TAG="Connection";
+    private MqttAndroidClient androidClient=null;
     private Context context;
     private String clientName,serverName,topicName;
 
-
+    /**
+     *
+     *
+     * @param context
+     * @param client
+     * @param server
+     * @param topic
+     */
     public Connection(Context context,String client,String server,String topic){
         this.context=context;
         this.clientName=client;
@@ -31,7 +44,10 @@ public class Connection {
     }
 
 
-
+    /**
+     *This method create a single instance of an android client.
+     * @return  single instance of android client.
+     */
     public MqttAndroidClient createClient(){
         androidClient= SingletonClient.getInstance(context).createClient(context,serverName,clientName);
         Log.d(TAG,"client creato");
@@ -39,10 +55,16 @@ public class Connection {
 
     }
 
+    /**
+     * This method create a connection with the broker.
+     * @param androidClient
+     */
     public void connect(final MqttAndroidClient androidClient){
 
         Log.d(TAG,androidClient.getClientId()+" "+androidClient.getServerURI());
-
+        /**
+         * Set connect options
+         */
         final MqttConnectOptions mqttConnectOptions= new MqttConnectOptions();
         mqttConnectOptions.setCleanSession(false);
         mqttConnectOptions.setKeepAliveInterval(0);
@@ -54,9 +76,15 @@ public class Connection {
                     Log.d(TAG,"ok connesso");
 
 
-
+                    /**
+                     * Save server and client variables in the SharedPreferences
+                     * @see SharedPreferencesSingleton#setStringPreferences(String, String)
+                     */
                     SharedPreferencesSingleton.setStringPreferences(SharedPreferencesSingleton.CLIENT,androidClient.getClientId()).
                             setStringPreferences(SharedPreferencesSingleton.SERVER,androidClient.getServerURI());
+                    /**
+                     *  @see Connection#sottoscriviTopic()
+                     */
                     sottoscriviTopic();
 
 
@@ -67,6 +95,9 @@ public class Connection {
                     Log.d(TAG, "la connessione non è riuscita "+exception.getMessage());
                     Toast.makeText(context, "la connessione non è riuscita "+exception.getMessage(),Toast.LENGTH_LONG).show();
                     SharedPreferencesSingleton.setBooleanPreferences(SharedPreferencesSingleton.STATUS,false);
+                    /**
+                     * Initializes the intent to stop the service
+                     */
                     Intent conn_intent= new Intent(context,MyMqttService.class);
                     context.stopService(conn_intent);
                 }
@@ -79,6 +110,9 @@ public class Connection {
 
     }
 
+    /**
+     *Subscribe the topic
+     */
     public void sottoscriviTopic(){
 
         try {
@@ -106,7 +140,9 @@ public class Connection {
         }
     }
 
-
+    /**
+     *Disconnect from broker
+     */
     public void disconnect() {
 
         androidClient= SingletonClient.getAndroidClient();
@@ -136,6 +172,11 @@ public class Connection {
         }
     }
 
+    /**
+     *Publish message on topic
+     * @param publishMessage value of the message
+     * @param topic name of topic
+     */
     public void publish(String publishMessage, String topic){
         androidClient= SingletonClient.getAndroidClient();
         MqttMessage mqttMessage= new MqttMessage();

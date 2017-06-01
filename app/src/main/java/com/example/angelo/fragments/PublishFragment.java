@@ -1,4 +1,4 @@
-package com.example.angelo.doorbelliot;
+package com.example.angelo.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -6,40 +6,33 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.angelo.doorbelliot.Connection;
+import com.example.angelo.servicemqtt.Connection;
 import com.example.angelo.doorbelliot.R;
 import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
-
-import org.eclipse.paho.android.service.MqttAndroidClient;
-
-import org.eclipse.paho.android.service.MqttAndroidClient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
 /**
- * Created by angelo on 19/05/17.
+ *
  */
-
-
 
 
 public class PublishFragment extends android.support.v4.app.Fragment {
     String query = "";
-    private final static String TOPIC_CONNECT = "query";
+
 
     private TextView mDisplayDateFrom;
     private DatePickerDialog.OnDateSetListener mDateSetListenerFrom;
@@ -198,8 +191,8 @@ public class PublishFragment extends android.support.v4.app.Fragment {
 
                         Connection connection= new Connection(getContext(), SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF),
                                 SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF),
-                                TOPIC_CONNECT);
-                        connection.publish(query,TOPIC_CONNECT);
+                                SharedPreferencesSingleton.TOPIC_QUERY_DEF);
+                        connection.publish(query,SharedPreferencesSingleton.TOPIC_QUERY_DEF);
                     }
                     else
                     {

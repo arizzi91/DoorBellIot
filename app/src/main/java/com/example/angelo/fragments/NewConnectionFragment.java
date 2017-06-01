@@ -1,4 +1,4 @@
-package com.example.angelo.doorbelliot;
+package com.example.angelo.fragments;
 
 
 import android.content.Context;
@@ -11,13 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.angelo.doorbelliot.Connection;
+import com.example.angelo.servicemqtt.Connection;
 import com.example.angelo.doorbelliot.R;
 import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
 
 
 /**
- * Created by angelo on 08/05/17.
+ *
  */
 
 public class NewConnectionFragment extends android.support.v4.app.Fragment {
@@ -28,7 +28,13 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
     PassValues pass;
     private static final String TAG="NewConnectionFragment";
 
-
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,6 +43,11 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
+    /**
+     *
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         client=(EditText)view.findViewById(R.id.clientId);
@@ -94,6 +105,14 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
 
     }
 
+    /**
+     *
+     * @param client
+     * @param server
+     * @param port
+     * @param topic
+     * @return
+     */
     private boolean parseValori(String client, String server, String port, String topic) {
         boolean ok=false;
         if(client.equals("") || server.equals("")  || port.equals("") || topic.equals("")){
@@ -102,12 +121,19 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
 
     }
 
+    /**
+     *
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(getContext());
         pass=(PassValues)context;
     }
 
+    /**
+     *
+     */
     public interface PassValues{
         void passage (String client, String server,String topic);
     }

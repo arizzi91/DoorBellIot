@@ -3,11 +3,13 @@ package com.example.angelo.doorbelliot;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created by angelo on 16/05/17.
- */
 
+
+/**
+ *Class to handle shared preferences
+ */
 public class SharedPreferencesSingleton {
+
     private SharedPreferences mySHaredPref;
     private static SharedPreferencesSingleton currentInstance;
 
@@ -18,19 +20,28 @@ public class SharedPreferencesSingleton {
     public static final String MESSAGGIO="messaggio";
 
     public static final String CLIENT_DEF="home";
-    public static final String SERVER_DEF="192.168.1.103";
-    public static final String TOPIC_DEF="prova";
+    public static final String SERVER_DEF="192.168.1.69";
+    public static final String TOPIC_DEF="ring";
+    public static final String TOPIC_QUERY_DEF="query";
+    public static final String QUERY_RESULT = "query_result";
     public static final boolean STATUS_DEF=false;
 
 
-
-
-
+    /**
+     *
+     * @param context
+     */
     private SharedPreferencesSingleton(Context context){
         if(mySHaredPref==null){
             mySHaredPref=context.getSharedPreferences(context.getPackageName(),Context.MODE_PRIVATE);
         }
     }
+
+    /**
+     *Init SharedPrefernces
+     * @param context
+     * @return
+     */
     public static SharedPreferencesSingleton init(Context context){
         if(currentInstance==null){
             currentInstance = new SharedPreferencesSingleton(context);
@@ -38,6 +49,12 @@ public class SharedPreferencesSingleton {
         return currentInstance;
     }
 
+    /**
+     * Save string value
+     * @param key
+     * @param value
+     * @return
+     */
     public static SharedPreferencesSingleton setStringPreferences(String key, String value){
         SharedPreferences.Editor editor= currentInstance.mySHaredPref.edit();
         editor.putString(key,value);
@@ -45,6 +62,12 @@ public class SharedPreferencesSingleton {
         return currentInstance;
     }
 
+    /**
+     * Save boolean value
+     * @param key
+     * @param value
+     * @return
+     */
     public static SharedPreferencesSingleton setBooleanPreferences(String key, boolean value){
         SharedPreferences.Editor editor= currentInstance.mySHaredPref.edit();
         editor.putBoolean(key,value);
@@ -52,10 +75,22 @@ public class SharedPreferencesSingleton {
         return currentInstance;
     }
 
+    /**
+     * Get string value from preferences
+     * @param key
+     * @param def
+     * @return
+     */
     public static String getStringPreferences(String key,String def){
         return currentInstance.mySHaredPref.getString(key,def);
     }
 
+    /**
+     * Get boolean value from preferences
+     * @param key
+     * @param def
+     * @return
+     */
     public static boolean getBooleanPreferences(String key, boolean def){
         return currentInstance.mySHaredPref.getBoolean(key,def);
     }

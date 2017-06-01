@@ -1,7 +1,6 @@
 package com.example.angelo.doorbelliot;
 
 import android.app.Dialog;
-import android.app.Notification;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -17,21 +16,37 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+
+
 /**
- * Created by angelo on 09/05/17.
+ *Adapter for RecyclerView in the CronologiaFragment
  */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
+    /**
+     * Debug Tag for use logging debug output to LogCat
+     */
     private static final String TAG="MyAdapter";
+    /**
+     * ArrayList which contains values of link at the images
+     */
     private ArrayList<String> myCrono;
 
+
+    /**
+     *
+     * @param images
+     */
     public MyAdapter(ArrayList<String> images) {
 
         myCrono=images;
+        Log.d(TAG,String.valueOf(myCrono.size()));
 
     }
 
-
+    /**
+     *
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mTextView;
@@ -45,20 +60,39 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     }
 
+    /**
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view,parent,false);
         return new ViewHolder(v);
     }
 
+    /**
+     *
+     * @param holder
+     * @param position
+     */
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final Context context= holder.mImageView.getContext();
         holder.mTextView.setText(getTitle(myCrono.get(position)));
-        Picasso.with(context).load(Uri.parse(myCrono.get(position))).into(holder.mImageView);
-        final int pos=position;
 
+        /**
+         *Load image from link using Picasso library
+         */
+        Picasso.with(context).load(Uri.parse(myCrono.get(position))).into(holder.mImageView);
+        Log.d(TAG,"foto settata");
+
+        final int pos=position;
+        /**
+         * Zoom the image
+         */
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -68,7 +102,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 dialog.setContentView(R.layout.dialog);
                 ImageView im = (ImageView) dialog.findViewById(R.id.imageView);
                 Picasso.with(context).load(Uri.parse(myCrono.get(pos))).into(im);
-
                 im.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -84,22 +117,31 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     }
 
 
-
+    /**
+     * Insert link into ArrayList and notify adapter
+     * @param data
+     */
     public void add(String  data){
-
-
         myCrono.add(data);
-
         this.notifyDataSetChanged();
 
 
     }
 
+    /**
+     * Extract title from the link
+     * @param data
+     * @return title of the image
+     */
     public String getTitle(String data){
         String title = data.substring(data.lastIndexOf("/")+1);
         return title;
     }
 
+    /**
+     * Get size of ArrayList
+     * @return size of ArrayList
+     */
     @Override
     public int getItemCount() {
         return myCrono.size();

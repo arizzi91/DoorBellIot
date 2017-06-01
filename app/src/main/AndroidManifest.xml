@@ -19,9 +19,9 @@
 
         <service android:name="org.eclipse.paho.android.service.MqttService" >
         </service>
-        <service android:name=".MyMqttService"></service>
+        <service android:name="com.example.angelo.servicemqtt.MyMqttService"></service>
 
-        <receiver android:name=".NotificationBroadcast">
+        <receiver android:name="com.example.angelo.servicemqtt.BootBroadcast">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

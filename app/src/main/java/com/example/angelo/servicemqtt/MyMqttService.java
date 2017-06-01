@@ -1,6 +1,7 @@
-package com.example.angelo.doorbelliot;
+package com.example.angelo.servicemqtt;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -8,18 +9,26 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
+
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-/**
- * Created by angelo on 18/05/17.
- */
 
+
+/**
+ *This class handle the application service for handle the events of the connection
+ */
 public class MyMqttService extends Service{
+    /**
+     * Debug Tag for use logging debug output to LogCat
+     */
     private static final String TAG="Service";
+
     private MqttAndroidClient androidClient;
+
 
     @Nullable
     @Override
@@ -27,6 +36,9 @@ public class MyMqttService extends Service{
         return null;
     }
 
+    /**
+     *Create the service
+     */
     @Override
     public void onCreate() {
 
@@ -34,23 +46,52 @@ public class MyMqttService extends Service{
 
     }
 
+    /**
+     *Destroy the service
+     */
     @Override
     public void onDestroy() {
         Log.d(TAG,"service stop");
         super.onDestroy();
     }
 
+    /**
+     *Start service oof the application to handle Mqtt push notification
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return START_STICKY_COMPATIBILITY
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
             if(intent != null && intent.hasExtra("CLIENT") && intent.hasExtra("SERVER") && intent.hasExtra("TOPIC")){
                 Connection connection= new Connection(getApplicationContext(),
                         intent.getStringExtra("CLIENT"),
                         intent.getStringExtra("SERVER"),
                         intent.getStringExtra("TOPIC"));
+                /**
+                 * Create an android client
+                 * @see Connection#createClient()
+                 */
                 androidClient=connection.createClient();
+                /**
+                 * Create a connection to broker
+                 * @see Connection#connect(MqttAndroidClient)
+                 */
                 connection.connect(androidClient);
+                /**
+                 * @see MyMqttService#messageArrived(MqttAndroidClient)
+                 */
                 this.messageArrived(androidClient);
+                /**
+                 * If intent is null start service with SharedPreferences
+                 */
             }else{
+                /**
+                 * Init SharedPreferences
+                 * @see SharedPreferencesSingleton#init(Context)
+                 */
                 SharedPreferencesSingleton.init(getBaseContext());
                 Connection connection=new Connection(getApplicationContext(),
                         SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF),
@@ -65,6 +106,10 @@ public class MyMqttService extends Service{
         return START_STICKY_COMPATIBILITY;
     }
 
+    /**
+     *Handle new message arrived
+     * @param androidClient
+     */
     private void messageArrived(MqttAndroidClient androidClient) {
         androidClient.setCallback(new MqttCallback() {
             @Override
@@ -80,9 +125,29 @@ public class MyMqttService extends Service{
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 Log.d(TAG, "messaggio dal topic "+topic+" contenente "+new String(message.getPayload()));
+                /**
+                 * Get payload of mqtt message and put it in a string
+                 */
                 String messageArrived= new String(message.getPayload());
-                NotificationBuild.buildNotification(messageArrived,getBaseContext());
-                CronologiaFragment.addMessageStatic(messageArrived);
+
+                /**
+                 * Control if message is result of a query
+                 */
+                if(messageArrived.contains("::")){
+                    String [] messagesQuery=  messageArrived.split("::");
+                    /**
+                     * Create notification
+                     * @see NotificationBuild#buildNotificationQuery(String[], Context)
+                     */
+                    NotificationBuild.buildNotificationQuery(messagesQuery,getBaseContext());
+                }else{
+                    /**
+                     * Create notification
+                     * @see NotificationBuild#buildNotification(String, Context)
+                     */
+                    NotificationBuild.buildNotification(messageArrived,getBaseContext());
+                }
+
                 Toast.makeText(getApplicationContext(),"messaggio dal topic "+topic+" contenente "+messageArrived ,Toast.LENGTH_SHORT).show();
             }
 
