@@ -2,6 +2,7 @@ package com.example.angelo.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -72,14 +73,8 @@ public class PublishFragment extends android.support.v4.app.Fragment {
                 int yearFrom = cal.get(Calendar.YEAR);
                 int monthFrom = cal.get(Calendar.MONTH);
                 int dayFrom = cal.get(Calendar.DAY_OF_MONTH);
+                showDialog(getContext(),yearFrom,monthFrom,dayFrom,mDateSetListenerFrom,null);
 
-                DatePickerDialog dialog = new DatePickerDialog(
-                        getContext(),
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mDateSetListenerFrom,
-                        yearFrom, monthFrom, dayFrom);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
             }
         });
 
@@ -100,14 +95,8 @@ public class PublishFragment extends android.support.v4.app.Fragment {
                 int yearTo = cal.get(Calendar.YEAR);
                 int monthTo = cal.get(Calendar.MONTH);
                 int dayTo = cal.get(Calendar.DAY_OF_MONTH);
+                showDialog(getContext(),yearTo,monthTo,dayTo,mDateSetListenerTo,null);
 
-                DatePickerDialog dialog = new DatePickerDialog(
-                        getContext(),
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mDateSetListenerTo,
-                        yearTo, monthTo, dayTo);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
             }
         });
 
@@ -127,14 +116,8 @@ public class PublishFragment extends android.support.v4.app.Fragment {
                 Calendar cal = Calendar.getInstance();
                 int hourFrom = cal.get(Calendar.HOUR_OF_DAY);
                 int minuteFrom = cal.get(Calendar.MINUTE);
+                showDialog(getContext(),hourFrom,minuteFrom,0,null,mTimeSetListenerFrom);
 
-                TimePickerDialog dialog = new TimePickerDialog(
-                        getContext(),
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mTimeSetListenerFrom,
-                        hourFrom, minuteFrom, DateFormat.is24HourFormat(getContext()));
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
             }
         });
 
@@ -142,10 +125,8 @@ public class PublishFragment extends android.support.v4.app.Fragment {
         mTimeSetListenerFrom = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourFrom, int minuteFrom) {
-
                 timefrom=fixValueTime(hourFrom,minuteFrom);
                 mDisplayTimeFrom.setText(timefrom);
-
             }
         };
 
@@ -156,14 +137,7 @@ public class PublishFragment extends android.support.v4.app.Fragment {
                 Calendar cal = Calendar.getInstance();
                 int hourTo = cal.get(Calendar.HOUR_OF_DAY);
                 int minuteTo = cal.get(Calendar.MINUTE);
-
-                TimePickerDialog dialog = new TimePickerDialog(
-                        getContext(),
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mTimeSetListenerTo,
-                        hourTo, minuteTo, DateFormat.is24HourFormat(getContext()));
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
+                showDialog(getContext(),hourTo,minuteTo,0,null,mTimeSetListenerTo);
             }
         });
 
@@ -210,6 +184,26 @@ public class PublishFragment extends android.support.v4.app.Fragment {
         });
 
 
+    }
+
+    private void showDialog(Context context, int valueOne, int valueTwo, int valueThree, DatePickerDialog.OnDateSetListener listenerDate,TimePickerDialog.OnTimeSetListener listenerTime) {
+        if(listenerTime==null){
+            DatePickerDialog dialog = new DatePickerDialog(
+                    context,
+                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                    listenerDate,
+                    valueOne, valueTwo, valueThree);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+        }else if (listenerDate==null){
+            TimePickerDialog dialog = new TimePickerDialog(
+                    getContext(),
+                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                    listenerTime,
+                    valueOne, valueTwo, DateFormat.is24HourFormat(context));
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+        }
     }
 
     private String fixValueTime(int value1, int value2){

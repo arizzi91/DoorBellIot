@@ -1,8 +1,13 @@
 package com.example.angelo.doorbelliot;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,12 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.angelo.servicemqtt.Connection;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 /**
@@ -97,6 +105,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             @Override
 
             public void onClick(View view) {
+
 
                 final Dialog dialog = new Dialog(context, R.style.FullScreenDialogTheme);
                 dialog.setContentView(R.layout.dialog);

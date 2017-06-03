@@ -132,7 +132,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
     }
 
     /**
-     *
+     *Interface to pass values
      */
     public interface PassValues{
         void passage (String client, String server,String topic);

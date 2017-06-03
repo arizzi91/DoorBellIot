@@ -15,7 +15,6 @@ import com.example.angelo.doorbelliot.R;
 import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
 
 import java.util.Date;
-import java.util.Random;
 
 /**
  * This class build notification when new message arrive at the client
@@ -41,6 +40,7 @@ public class NotificationBuild {
         builder.setSound(Uri.parse("android.resource://"+context.getPackageName()+"/"+R.raw.door_bell_sound));
         builder.setAutoCancel(true);
         builder.setDefaults(Notification.DEFAULT_VIBRATE);
+
 
         /**
          * Create intent and pass it at MainActivity
@@ -84,6 +84,7 @@ public class NotificationBuild {
         builder.setDefaults(Notification.DEFAULT_VIBRATE);
 
 
+
         /**
          * Create intent and pass it at MainActivity
          * @see MainActivity#onNewIntent(Intent)
@@ -113,13 +114,13 @@ public class NotificationBuild {
      * @param query
      * @return text of notification
      */
-    private static CharSequence printMessage(String [] query) {
-        CharSequence charsequence="";
-        for (int i=0; i<query.length; i++){
-            charsequence=charsequence+query[i]+"\n";
+    private static String printMessage(String [] query) {
+        String title="";
+        for(int i=0; i<query.length; i++){
+            title=title+query[i]+"\n.";
         }
-        Log.d(TAG,"testo notifica "+charsequence.toString());
-        return charsequence;
+        Log.d(TAG,title);
+        return title;
     }
 
     /**
