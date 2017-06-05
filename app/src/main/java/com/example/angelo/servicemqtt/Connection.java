@@ -156,6 +156,7 @@ public class Connection {
                     Log.d(TAG,"ok disconnesso");
                     Toast.makeText(context,"Sei disconnesso",Toast.LENGTH_LONG).show();
 
+
                 }
 
                 @Override

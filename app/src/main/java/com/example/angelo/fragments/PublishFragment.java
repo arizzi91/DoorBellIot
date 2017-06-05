@@ -166,7 +166,11 @@ public class PublishFragment extends android.support.v4.app.Fragment {
                         Connection connection= new Connection(getContext(), SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF),
                                 SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF),
                                 SharedPreferencesSingleton.TOPIC_QUERY_DEF);
-                        connection.publish(query,SharedPreferencesSingleton.TOPIC_QUERY_DEF);
+                        if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,SharedPreferencesSingleton.STATUS_DEF)){
+                            connection.publish(query,SharedPreferencesSingleton.TOPIC_QUERY_DEF);
+                        }else{
+                            Toast.makeText(getContext(),"Devi connetterti prima",Toast.LENGTH_LONG).show();
+                        }
                     }
                     else
                     {

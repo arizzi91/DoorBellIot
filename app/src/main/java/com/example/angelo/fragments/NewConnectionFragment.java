@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.angelo.servicemqtt.Connection;
@@ -23,6 +24,7 @@ import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
 public class NewConnectionFragment extends android.support.v4.app.Fragment {
     private EditText client, server, port, topic;
     private Button conn,disc;
+    private TextView status;
     String clientName,serverName, topicName;
     int portName;
     PassValues pass;
@@ -40,6 +42,11 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
 
         View view= inflater.inflate(R.layout.new_connection, container, false);
+        status=(TextView)view.findViewById(R.id.status_connection);
+        /**
+         * @see NewConnectionFragment#updateStatus()
+         */
+        updateStatus();
         return view;
     }
 
@@ -58,6 +65,8 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
         disc=(Button)view.findViewById(R.id.btn_disconnect);
 
 
+
+
         conn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,10 +83,17 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
                             topicName.equals(SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,SharedPreferencesSingleton.TOPIC_DEF))){
                         Toast.makeText(getContext(),"sei già connesso con i parametri inseriti",Toast.LENGTH_LONG).show();
                         Log.d(TAG,"sei già connesso con i parametri inseriti");
+                        updateStatus();
+
                     }else{
                         pass.passage(clientName,serverName,topicName);
+                        updateStatus();
+
                     }
-                }else Toast.makeText(getContext(),"inserire campi mancanti",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getContext(),"inserire campi mancanti",Toast.LENGTH_LONG).show();
+
+                }
 
             }
         });
@@ -92,6 +108,8 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
                             SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,"server"),
                             SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,"topic"));
                     connection.disconnect();
+                    updateStatus();
+
 
                 }else{
                     Log.d(TAG,"non sei connesso");
@@ -136,5 +154,23 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
      */
     public interface PassValues{
         void passage (String client, String server,String topic);
+    }
+
+    /**
+     * Shows current info about connection
+     */
+
+    public void updateStatus(){
+        if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,true)){
+            status.setText("Sei connesso al broker: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF)+
+            ".\nCon clientID: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF)+
+                    ".\nSottoscritto al topic: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,SharedPreferencesSingleton.TOPIC_DEF));
+            status.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }else{
+            status.setText("Non sei attualmente connesso");
+            status.setTextColor(getResources().getColor(R.color.colorAccent));
+
+        }
+
     }
 }
