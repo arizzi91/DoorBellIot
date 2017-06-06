@@ -1,6 +1,7 @@
 package com.example.angelo.servicemqtt;
 
 import android.content.Context;
+import android.icu.util.Calendar;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 
@@ -27,7 +28,7 @@ public class SingletonClient {
      * @return android client
      */
     public MqttAndroidClient createClient(Context context, String serverName, String clientName){
-        client = new MqttAndroidClient(context,serverName,clientName);
+        client = new MqttAndroidClient(context,serverName,clientName+System.currentTimeMillis());
         return client;
     }
 

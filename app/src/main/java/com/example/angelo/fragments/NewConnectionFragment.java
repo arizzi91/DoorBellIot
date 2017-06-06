@@ -3,6 +3,7 @@ package com.example.angelo.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
     PassValues pass;
     private static final String TAG="NewConnectionFragment";
 
+
     /**
      *
      * @param inflater
@@ -43,6 +45,8 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
 
         View view= inflater.inflate(R.layout.new_connection, container, false);
         status=(TextView)view.findViewById(R.id.status_connection);
+
+
         /**
          * @see NewConnectionFragment#updateStatus()
          */
@@ -64,9 +68,6 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
         conn=(Button)view.findViewById(R.id.btn_newConnection);
         disc=(Button)view.findViewById(R.id.btn_disconnect);
 
-
-
-
         conn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,13 +78,10 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
                     portName=Integer.parseInt(port.getText().toString());
                     topicName=topic.getText().toString();
                     serverName="tcp://"+serverName+":"+portName;
-                    if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,SharedPreferencesSingleton.STATUS_DEF) &&
-                            clientName.equals(SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF)) &&
-                            serverName.equals(SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF)) &&
-                            topicName.equals(SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,SharedPreferencesSingleton.TOPIC_DEF))){
-                        Toast.makeText(getContext(),"sei già connesso con i parametri inseriti",Toast.LENGTH_LONG).show();
-                        Log.d(TAG,"sei già connesso con i parametri inseriti");
-                        updateStatus();
+                    if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,SharedPreferencesSingleton.STATUS_DEF)){
+                        Toast.makeText(getContext(),"Disconnettiti prima di avviare una nuova connessione.",Toast.LENGTH_LONG).show();
+                        Log.d(TAG,"sei già connesso");
+
 
                     }else{
                         pass.passage(clientName,serverName,topicName);
@@ -91,7 +89,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
 
                     }
                 }else{
-                    Toast.makeText(getContext(),"inserire campi mancanti",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"inserire correttamente i campi",Toast.LENGTH_LONG).show();
 
                 }
 
@@ -134,7 +132,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
     private boolean parseValori(String client, String server, String port, String topic) {
         boolean ok=false;
         if(client.equals("") || server.equals("")  || port.equals("") || topic.equals("")){
-        }else ok=true;
+        }else if(client.length()<10) ok=true;
         return ok;
 
     }
@@ -161,7 +159,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
      */
 
     public void updateStatus(){
-        if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,true)){
+        if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,false)){
             status.setText("Sei connesso al broker: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF)+
             ".\nCon clientID: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF)+
                     ".\nSottoscritto al topic: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,SharedPreferencesSingleton.TOPIC_DEF));
@@ -173,4 +171,5 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
         }
 
     }
+
 }
