@@ -34,9 +34,9 @@ public class NotificationBuild {
     public static void buildNotification(String message, Context context){
         Log.d(TAG,"notifica normale");
         NotificationCompat.Builder builder= new NotificationCompat.Builder(context);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle("Notifica IoTApp");
-        builder.setContentText("Immagine arrivata"+ message);
+        builder.setSmallIcon(R.drawable.ic_door_notification);
+        builder.setContentTitle("WhoRing");
+        builder.setContentText("Immagine arrivata: "+ message);
         builder.setSound(Uri.parse("android.resource://"+context.getPackageName()+"/"+R.raw.door_bell_sound));
         builder.setAutoCancel(true);
         builder.setDefaults(Notification.DEFAULT_VIBRATE);
@@ -73,8 +73,8 @@ public class NotificationBuild {
     public static void buildNotificationQuery(String [] query,Context context){
         Log.d(TAG,"notifica con query");
         NotificationCompat.Builder builder= new NotificationCompat.Builder(context);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle("Notifica IoTApp-Query");
+        builder.setSmallIcon(R.drawable.ic_door_notification);
+        builder.setContentTitle("WhoRing-Query");
         /**
          * @see NotificationBuild#printMessage(String[])
          */

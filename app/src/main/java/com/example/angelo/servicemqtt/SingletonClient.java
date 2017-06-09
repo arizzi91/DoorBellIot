@@ -48,7 +48,7 @@ public class SingletonClient {
 
     /**
      * Get the instance of android client
-     * @return
+     * @return android client
      */
     public static MqttAndroidClient getAndroidClient(){
         return client;

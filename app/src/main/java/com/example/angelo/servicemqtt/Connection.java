@@ -31,10 +31,10 @@ public class Connection {
     /**
      *
      *
-     * @param context
-     * @param client
-     * @param server
-     * @param topic
+     * @param context context of application
+     * @param client  clientID
+     * @param server  server
+     * @param topic   topic name
      */
     public Connection(Context context,String client,String server,String topic){
         this.context=context;
@@ -46,6 +46,8 @@ public class Connection {
 
     /**
      *This method create a single instance of an android client.
+     * @see SingletonClient#getInstance(Context)
+     * @see SingletonClient#createClient(Context, String, String)
      * @return  single instance of android client.
      */
     public MqttAndroidClient createClient(){
@@ -60,6 +62,7 @@ public class Connection {
      * @param androidClient
      */
     public void connect(final MqttAndroidClient androidClient){
+
 
         Log.d(TAG,androidClient.getClientId()+" "+androidClient.getServerURI());
         /**

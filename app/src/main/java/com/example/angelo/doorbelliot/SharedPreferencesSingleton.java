@@ -40,7 +40,7 @@ public class SharedPreferencesSingleton {
     /**
      *Init SharedPrefernces
      * @param context
-     * @return
+     * @return instance
      */
     public static SharedPreferencesSingleton init(Context context){
         if(currentInstance==null){
@@ -53,7 +53,7 @@ public class SharedPreferencesSingleton {
      * Save string value
      * @param key
      * @param value
-     * @return
+     * @return current instance of shared preferences
      */
     public static SharedPreferencesSingleton setStringPreferences(String key, String value){
         SharedPreferences.Editor editor= currentInstance.mySHaredPref.edit();
@@ -66,7 +66,7 @@ public class SharedPreferencesSingleton {
      * Save boolean value
      * @param key
      * @param value
-     * @return
+     * @return current instance of shared preferences
      */
     public static SharedPreferencesSingleton setBooleanPreferences(String key, boolean value){
         SharedPreferences.Editor editor= currentInstance.mySHaredPref.edit();
@@ -79,7 +79,7 @@ public class SharedPreferencesSingleton {
      * Get string value from preferences
      * @param key
      * @param def
-     * @return
+     * @return string value
      */
     public static String getStringPreferences(String key,String def){
         return currentInstance.mySHaredPref.getString(key,def);
@@ -89,7 +89,8 @@ public class SharedPreferencesSingleton {
      * Get boolean value from preferences
      * @param key
      * @param def
-     * @return
+     * @return boolean value
+     *
      */
     public static boolean getBooleanPreferences(String key, boolean def){
         return currentInstance.mySHaredPref.getBoolean(key,def);

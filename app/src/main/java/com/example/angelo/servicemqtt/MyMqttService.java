@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.android.service.MqttService;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -125,10 +126,12 @@ public class MyMqttService extends Service{
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 Log.d(TAG, "messaggio dal topic "+topic+" contenente "+new String(message.getPayload()));
+
                 /**
                  * Get payload of mqtt message and put it in a string
                  */
                 String messageArrived= new String(message.getPayload());
+
 
                 /**
                  * Control if message is result of a query

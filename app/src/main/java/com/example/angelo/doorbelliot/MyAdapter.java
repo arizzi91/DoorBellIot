@@ -52,9 +52,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     }
 
-    /**
-     *
-     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView mTextView;
@@ -68,23 +65,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     }
 
-    /**
-     *
-     * @param parent
-     * @param viewType
-     * @return
-     */
+
     @Override
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view,parent,false);
         return new ViewHolder(v);
     }
 
-    /**
-     *
-     * @param holder
-     * @param position
-     */
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 

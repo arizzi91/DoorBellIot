@@ -32,13 +32,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
     private static final String TAG="NewConnectionFragment";
 
 
-    /**
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,11 +48,6 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    /**
-     *
-     * @param view
-     * @param savedInstanceState
-     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         client=(EditText)view.findViewById(R.id.clientId);
@@ -81,8 +70,6 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
                     if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,SharedPreferencesSingleton.STATUS_DEF)){
                         Toast.makeText(getContext(),"Disconnettiti prima di avviare una nuova connessione.",Toast.LENGTH_LONG).show();
                         Log.d(TAG,"sei già connesso");
-
-
                     }else{
                         pass.passage(clientName,serverName,topicName);
                         updateStatus();
@@ -127,7 +114,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
      * @param server
      * @param port
      * @param topic
-     * @return
+     * @return boolean
      */
     private boolean parseValori(String client, String server, String port, String topic) {
         boolean ok=false;
@@ -137,10 +124,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
 
     }
 
-    /**
-     *
-     * @param context
-     */
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(getContext());
