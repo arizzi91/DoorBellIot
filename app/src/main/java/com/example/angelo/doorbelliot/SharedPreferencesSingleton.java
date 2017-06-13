@@ -13,18 +13,22 @@ public class SharedPreferencesSingleton {
     private SharedPreferences mySHaredPref;
     private static SharedPreferencesSingleton currentInstance;
 
+    public static final String FIRST_START="start";
     public static final String CLIENT="CLIENT";
     public static final String SERVER="SERVER";
     public static final String TOPIC="TOPIC";
     public static final String STATUS="STATUS";
     public static final String MESSAGGIO="messaggio";
+    public static final String MESS_STATUS="status_conn";
 
     public static final String CLIENT_DEF="home";
     public static final String SERVER_DEF="192.168.1.69";
     public static final String TOPIC_DEF="ring";
     public static final String TOPIC_QUERY_DEF="query";
+    public static final String MESS_STATUS_DEF="Non sei attualmente connesso";
     public static final String QUERY_RESULT = "query_result";
     public static final boolean STATUS_DEF=false;
+
 
 
     /**

@@ -151,7 +151,7 @@ public class MyMqttService extends Service{
                     NotificationBuild.buildNotification(messageArrived,getBaseContext());
                 }
 
-                Toast.makeText(getApplicationContext(),"messaggio dal topic "+topic+" contenente "+messageArrived ,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"messaggio dal topic "+topic+" contenente "+messageArrived ,Toast.LENGTH_SHORT).show();
             }
 
             @Override

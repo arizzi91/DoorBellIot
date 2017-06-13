@@ -3,7 +3,6 @@ package com.example.angelo.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
     private EditText client, server, port, topic;
     private Button conn,disc;
     private TextView status;
-    String clientName,serverName, topicName;
+    private String clientName,serverName, topicName;
     int portName;
     PassValues pass;
     private static final String TAG="NewConnectionFragment";
@@ -39,24 +38,24 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
 
         View view= inflater.inflate(R.layout.new_connection, container, false);
         status=(TextView)view.findViewById(R.id.status_connection);
-
-
-        /**
-         * @see NewConnectionFragment#updateStatus()
-         */
-        updateStatus();
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
         client=(EditText)view.findViewById(R.id.clientId);
         server=(EditText)view.findViewById(R.id.serverURI);
         port=(EditText)view.findViewById(R.id.port);
         topic=(EditText)view.findViewById(R.id.sub);
         conn=(Button)view.findViewById(R.id.btn_newConnection);
         disc=(Button)view.findViewById(R.id.btn_disconnect);
+        /**
+         * @see NewConnectionFragment#updateStatus()
+         */
+        status.setText(updateStatus());
 
+
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         conn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +71,7 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
                         Log.d(TAG,"sei già connesso");
                     }else{
                         pass.passage(clientName,serverName,topicName);
-                        updateStatus();
+
 
                     }
                 }else{
@@ -93,7 +92,8 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
                             SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,"server"),
                             SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,"topic"));
                     connection.disconnect();
-                    updateStatus();
+
+
 
 
                 }else{
@@ -103,6 +103,8 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
 
             }
         });
+
+
 
 
 
@@ -141,19 +143,22 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
     /**
      * Shows current info about connection
      */
+    private String updateStatus(){
+        String statusConn="";
+        if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,SharedPreferencesSingleton.STATUS_DEF)){
+            statusConn="Sei connesso al broker: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF)+
+                    ".\nCon clientID: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF)+
+                    ".\nSottoscritto al topic: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,SharedPreferencesSingleton.TOPIC_DEF);
 
-    public void updateStatus(){
-        if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,false)){
-            status.setText("Sei connesso al broker: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF)+
-            ".\nCon clientID: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF)+
-                    ".\nSottoscritto al topic: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,SharedPreferencesSingleton.TOPIC_DEF));
             status.setTextColor(getResources().getColor(R.color.colorPrimary));
         }else{
-            status.setText("Non sei attualmente connesso");
+            statusConn=SharedPreferencesSingleton.MESS_STATUS_DEF;
             status.setTextColor(getResources().getColor(R.color.colorAccent));
 
         }
-
+        SharedPreferencesSingleton.setStringPreferences(SharedPreferencesSingleton.MESS_STATUS,statusConn);
+        return statusConn;
     }
+
 
 }

@@ -9,7 +9,12 @@
     <string name="portHint">5000</string>
     <string name="topicHint">ring</string>
     <string name="sub">Topic</string>
-    <string name="button_connection">CONNETTI E SOTTOSCRIVI TOPIC</string>
+    <string name="button_connection">CONNETTI</string>
     <string name="button_disconnect">DISCONNETTI</string>
-
+    <string name="welcome">\nBenvenuto su WhoRing!\n\n\n</string>
+    <string name="description_welcome">Grazie a questa applicazione potrai vedere immediatamente chi ha suonato alla tua porta mentre sei fuori casa!</string>
+    <string name="welcome_connection">\nSempre aggiornato\n\n</string>
+    <string name="description_connection">\n\nCon il servizio di push notification di MQTT rimani sempre connesso alla porta di casa tua.</string>
+    <string name="welcome_query">\nVuoi rivedere qualche foto?\n\n</string>
+    <string name="description_query">\n\nNo problem! Inserisci i parametri nella scheda query e arriveranno subito le foto corrispondenti.</string>
 </resources>

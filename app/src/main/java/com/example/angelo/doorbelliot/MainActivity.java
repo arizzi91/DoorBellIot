@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.example.angelo.fragments.CronologiaFragment;
 import com.example.angelo.fragments.NewConnectionFragment;
+import com.example.angelo.intro.IntroApp;
 import com.example.angelo.servicemqtt.MyMqttService;
 
 /**
@@ -40,6 +41,15 @@ public class MainActivity extends AppCompatActivity implements NewConnectionFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferencesSingleton.init(getApplicationContext());
+        if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.FIRST_START,true)){
+            Intent intent = new Intent(this, IntroApp.class);
+            startActivity(intent);
+            SharedPreferencesSingleton.setBooleanPreferences(SharedPreferencesSingleton.FIRST_START,false);
+        }
+
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements NewConnectionFrag
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         tabLayout.setupWithViewPager(mViewPager);
-        SharedPreferencesSingleton.init(getApplicationContext());
+
+
 
         /**
          * @see MainActivity#onNewIntent(Intent)
