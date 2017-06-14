@@ -12,16 +12,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.angelo.doorbelliot.MyDataModel;
 import com.example.angelo.servicemqtt.Connection;
 import com.example.angelo.doorbelliot.R;
 import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
+
+import java.util.Observable;
+import java.util.Observer;
 
 
 /**
  *
  */
 
-public class NewConnectionFragment extends android.support.v4.app.Fragment {
+public class NewConnectionFragment extends android.support.v4.app.Fragment implements Observer{
     private EditText client, server, port, topic;
     private Button conn,disc;
     private TextView status;
@@ -30,6 +34,8 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
     PassValues pass;
     private static final String TAG="NewConnectionFragment";
 
+    private MyDataModel dataModel;
+
 
 
     @Override
@@ -37,6 +43,10 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
 
         View view= inflater.inflate(R.layout.new_connection, container, false);
+
+        dataModel=MyDataModel.getInstance();
+        dataModel.addObserver(this);
+
         status=(TextView)view.findViewById(R.id.status_connection);
         client=(EditText)view.findViewById(R.id.clientId);
         server=(EditText)view.findViewById(R.id.serverURI);
@@ -133,6 +143,20 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
         pass=(PassValues)context;
     }
 
+    //set textview
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof MyDataModel){
+            // in quanto potremmo avere piu modelli dati
+            // verifichiamo su quale modello è avvenuto un cambiamento dei dati
+            // prima di effettuare il cast
+
+            MyDataModel m=(MyDataModel)o;
+            status.setText(m.getMyData());
+            Log.d("dati status",m.getMyData());
+        }
+    }
+
     /**
      *Interface to pass values
      */
@@ -146,14 +170,14 @@ public class NewConnectionFragment extends android.support.v4.app.Fragment {
     private String updateStatus(){
         String statusConn="";
         if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.STATUS,SharedPreferencesSingleton.STATUS_DEF)){
-            statusConn="Sei connesso al broker: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF)+
+            statusConn="Connesso al broker: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.SERVER,SharedPreferencesSingleton.SERVER_DEF)+
                     ".\nCon clientID: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.CLIENT,SharedPreferencesSingleton.CLIENT_DEF)+
                     ".\nSottoscritto al topic: "+SharedPreferencesSingleton.getStringPreferences(SharedPreferencesSingleton.TOPIC,SharedPreferencesSingleton.TOPIC_DEF);
 
-            status.setTextColor(getResources().getColor(R.color.colorPrimary));
+
         }else{
             statusConn=SharedPreferencesSingleton.MESS_STATUS_DEF;
-            status.setTextColor(getResources().getColor(R.color.colorAccent));
+
 
         }
         SharedPreferencesSingleton.setStringPreferences(SharedPreferencesSingleton.MESS_STATUS,statusConn);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.angelo.doorbelliot.MyDataModel;
 import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -27,6 +28,8 @@ public class Connection {
     private MqttAndroidClient androidClient=null;
     private Context context;
     private String clientName,serverName,topicName;
+
+    private MyDataModel dataModel= MyDataModel.getInstance();
 
     /**
      *
@@ -103,6 +106,8 @@ public class Connection {
                      */
                     Intent conn_intent= new Intent(context,MyMqttService.class);
                     context.stopService(conn_intent);
+                    //data model
+                    dataModel.setMyData(SharedPreferencesSingleton.MESS_STATUS_DEF);
                 }
             });
         } catch (MqttException e) {
@@ -124,10 +129,15 @@ public class Connection {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.d(TAG,"ok sottoscritto");
-                    Toast.makeText(context,"Sei connesso al broker: "+androidClient.getServerURI()+
+                    Toast.makeText(context,"Connesso al broker: "+androidClient.getServerURI()+
                                     ".\nCon clientID: "+androidClient.getClientId()+
                                     ".\nSottoscritto al topic: "+topicName,
                             Toast.LENGTH_LONG).show();
+                    //set data model
+                    dataModel.setMyData("Connesso al broker: "+androidClient.getServerURI()+
+                            ".\nCon clientID: "+androidClient.getClientId()+
+                            ".\nSottoscritto al topic: "+topicName);
+
                     SharedPreferencesSingleton.setBooleanPreferences(SharedPreferencesSingleton.STATUS,true);
 
                 }
@@ -159,6 +169,7 @@ public class Connection {
                     Log.d(TAG,"ok disconnesso");
                     Toast.makeText(context,"Sei disconnesso",Toast.LENGTH_LONG).show();
 
+                    dataModel.setMyData(SharedPreferencesSingleton.MESS_STATUS_DEF);
 
                 }
 

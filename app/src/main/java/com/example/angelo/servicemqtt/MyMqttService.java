@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+import com.example.angelo.doorbelliot.MyDataModel;
 import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -29,6 +30,8 @@ public class MyMqttService extends Service{
     private static final String TAG="Service";
 
     private MqttAndroidClient androidClient;
+
+    private MyDataModel dataModel= MyDataModel.getInstance();
 
 
     @Nullable
@@ -120,6 +123,7 @@ public class MyMqttService extends Service{
                 getBaseContext().stopService(lost_intent);
                 SharedPreferencesSingleton.init(getBaseContext());
                 SharedPreferencesSingleton.setBooleanPreferences(SharedPreferencesSingleton.STATUS,false);
+                dataModel.setMyData(SharedPreferencesSingleton.MESS_STATUS_DEF);
                 Toast.makeText(getBaseContext(),"connessione persa",Toast.LENGTH_LONG).show();
             }
 
