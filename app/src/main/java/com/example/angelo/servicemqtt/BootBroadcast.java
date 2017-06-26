@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
+import com.example.angelo.data.SharedPreferencesSingleton;
 
 
 /**

@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.example.angelo.doorbelliot.MainActivity;
 import com.example.angelo.doorbelliot.R;
-import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
+import com.example.angelo.data.SharedPreferencesSingleton;
 
 import java.util.Date;
 
@@ -132,5 +132,8 @@ public class NotificationBuild {
 
         return (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
     }
+
+
+
 
 }

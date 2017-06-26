@@ -9,15 +9,17 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-import com.example.angelo.doorbelliot.MyDataModel;
-import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
+import com.example.angelo.data.MyDataModel;
+import com.example.angelo.data.SharedPreferencesSingleton;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
-import org.eclipse.paho.android.service.MqttService;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -131,6 +133,8 @@ public class MyMqttService extends Service{
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 Log.d(TAG, "messaggio dal topic "+topic+" contenente "+new String(message.getPayload()));
 
+
+
                 /**
                  * Get payload of mqtt message and put it in a string
                  */
@@ -148,14 +152,20 @@ public class MyMqttService extends Service{
                      */
                     NotificationBuild.buildNotificationQuery(messagesQuery,getBaseContext());
                 }else{
+
+
                     /**
                      * Create notification
                      * @see NotificationBuild#buildNotification(String, Context)
                      */
+
+
+
+
                     NotificationBuild.buildNotification(messageArrived,getBaseContext());
                 }
 
-                //Toast.makeText(getApplicationContext(),"messaggio dal topic "+topic+" contenente "+messageArrived ,Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -164,5 +174,8 @@ public class MyMqttService extends Service{
             }
         });
     }
+
+
+
 
 }

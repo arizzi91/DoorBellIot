@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.example.angelo.data.SharedPreferencesSingleton;
 import com.example.angelo.fragments.CronologiaFragment;
 import com.example.angelo.fragments.NewConnectionFragment;
 import com.example.angelo.intro.IntroApp;
@@ -41,14 +42,14 @@ public class MainActivity extends AppCompatActivity implements NewConnectionFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         SharedPreferencesSingleton.init(getApplicationContext());
+
         if(SharedPreferencesSingleton.getBooleanPreferences(SharedPreferencesSingleton.FIRST_START,true)){
             Intent intent = new Intent(this, IntroApp.class);
             startActivity(intent);
             SharedPreferencesSingleton.setBooleanPreferences(SharedPreferencesSingleton.FIRST_START,false);
         }
-
-
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -62,8 +63,6 @@ public class MainActivity extends AppCompatActivity implements NewConnectionFrag
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         tabLayout.setupWithViewPager(mViewPager);
-
-
 
         /**
          * @see MainActivity#onNewIntent(Intent)
@@ -129,9 +128,6 @@ public class MainActivity extends AppCompatActivity implements NewConnectionFrag
 
 
     }
-
-
-
 
 
 }

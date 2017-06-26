@@ -1,4 +1,4 @@
-package com.example.angelo.doorbelliot;
+package com.example.angelo.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;

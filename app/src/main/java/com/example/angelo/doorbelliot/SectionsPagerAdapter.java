@@ -3,7 +3,6 @@ package com.example.angelo.doorbelliot;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
 import com.example.angelo.fragments.CronologiaFragment;
 import com.example.angelo.fragments.NewConnectionFragment;
 import com.example.angelo.fragments.PublishFragment;

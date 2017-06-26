@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.angelo.doorbelliot.MyDataModel;
-import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
+import com.example.angelo.data.MyDataModel;
+import com.example.angelo.data.SharedPreferencesSingleton;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -28,7 +28,6 @@ public class Connection {
     private MqttAndroidClient androidClient=null;
     private Context context;
     private String clientName,serverName,topicName;
-
     private MyDataModel dataModel= MyDataModel.getInstance();
 
     /**

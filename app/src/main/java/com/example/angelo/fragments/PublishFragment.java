@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.angelo.servicemqtt.Connection;
 import com.example.angelo.doorbelliot.R;
-import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
+import com.example.angelo.data.SharedPreferencesSingleton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

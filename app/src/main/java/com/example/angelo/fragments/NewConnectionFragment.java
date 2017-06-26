@@ -12,10 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.angelo.doorbelliot.MyDataModel;
+import com.example.angelo.data.MyDataModel;
 import com.example.angelo.servicemqtt.Connection;
 import com.example.angelo.doorbelliot.R;
-import com.example.angelo.doorbelliot.SharedPreferencesSingleton;
+import com.example.angelo.data.SharedPreferencesSingleton;
 
 import java.util.Observable;
 import java.util.Observer;
